@@ -1,0 +1,76 @@
+<div style="height: 100%;">
+    <div class="row" style="height:inherit">
+        <div class="col-md-3 col-xs-12" style="background-color:#222; height:inherit">
+            <div>
+                <mat-card class="mt-3">
+                    <form [formGroup]="todoForm" (submit)="addTask($event)">
+                        <div class="example-container">
+                            <mat-form-field appearance="fill" class="custom-input-full">
+                                <mat-label>Task name</mat-label>
+                                <input matInput formControlName="title" placeholder="Task name" required
+                                    [(ngModel)]="todoInput.title">
+                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                <mat-hint>Enter task name</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" class="custom-input-full mt-3">
+                                <mat-label>Expired date</mat-label>
+                                <input matInput [matDatepicker]="expiredDate" formControlName="date" required
+                                    [(ngModel)]="todoInput.expiredDate">
+                                <mat-datepicker-toggle [for]="expiredDate" matSuffix></mat-datepicker-toggle>
+                                <mat-datepicker #expiredDate></mat-datepicker>
+                                <mat-hint>Choose the expired date</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="todoForm.invalid"
+                            class="mt-2">Add new</button>
+                    </form>
+                </mat-card>
+            </div>
+        </div>
+        <div class="col-md-9 col-xs-12" style="height:inherit;background-color:#ba68c8">
+            <div cdkDropListGroup>
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 example-container">
+                        <h2>To do</h2>
+                        <div cdkDropList [cdkDropListData]="todo" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="example-box" *ngFor="let item of todo" cdkDrag>
+                                <div style="display:flex;flex-direction:column;justify-content:space-between">
+                                    {{item.title}}
+                                    <br />
+                                    {{item.expiredDate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 example-container">
+                        <h2>Inprogress</h2>
+                        <div cdkDropList [cdkDropListData]="inprogress" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="example-box" *ngFor="let item of inprogress" cdkDrag>
+                                <div>
+                                    {{item.title}}
+                                    <br />
+                                    {{item.expiredDate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 example-container">
+                        <h2>Done</h2>
+                        <div cdkDropList [cdkDropListData]="completed" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+                            <div class="example-box" *ngFor="let item of completed" cdkDrag>
+                                <div>
+                                    {{item.title}}
+                                    <br />
+                                    {{item.expiredDate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
